@@ -189,10 +189,19 @@ jobs:
             echo -e "[web]\n" > inventory.txt
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
             cat inventory.txt
+
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+
+      - run: 
+          name: check on workspace persist
+          command: |
+            pwd
+            ls
+            cat inventory.txt
+
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"  
 
