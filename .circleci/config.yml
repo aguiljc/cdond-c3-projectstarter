@@ -219,6 +219,8 @@ jobs:
             cd .circleci/ansible
             echo "contents of circle/ansible"
             ls
+            echo "contents of inventory.txt:"
+            cat inventory.txt
             echo " ---- "
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
