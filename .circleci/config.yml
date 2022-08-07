@@ -188,7 +188,7 @@ jobs:
             cd ~/project/.circleci/ansible/
             ls
             echo -e "[web]\n" > inventory.txt
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> ~/.circleci/ansible/inventory.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
             echo "post describe instances - I'm in this director"
             ls
             pwd
