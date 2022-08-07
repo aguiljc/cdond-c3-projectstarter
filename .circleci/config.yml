@@ -198,6 +198,7 @@ jobs:
       - run: 
           name: check on workspace persist
           command: |
+            cd .circleci/ansible/
             pwd
             ls
             cat inventory.txt
