@@ -1,10 +1,8 @@
 version: 2.1
 
-# orbs: 
-#   slack: circleci/slack@4.10.1
-
 orbs: 
-    slack: circleci/slack@3.4.2    
+  slack: circleci/slack@4.10.1
+   
 
 commands:
   destroy-environment:
@@ -81,7 +79,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - slack/status
+      # - slack/status
 
   build-backend:
     docker:
@@ -176,7 +174,6 @@ jobs:
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
-              #exit 1
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -185,7 +182,6 @@ jobs:
               --tags project=udapeople\
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
-              #exit 1
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -206,7 +202,7 @@ jobs:
             cat inventory.txt
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"  
-      - slack/status
+      # - slack/status
 
   configure-infrastructure:
     docker:
@@ -239,7 +235,7 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"    
-      - slack/status
+      # - slack/status
 
   run-migrations:
     docker:
@@ -261,7 +257,7 @@ jobs:
             - migrations_dump.txt
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}" 
-      - slack/status
+      # - slack/status
  
 
 #   deploy-frontend:
