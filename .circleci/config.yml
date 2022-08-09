@@ -285,7 +285,7 @@ jobs:
 
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-            
+
       - run:
           name: Deploy frontend objects
           command: |
@@ -389,8 +389,8 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - deploy-frontend:
+          requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
