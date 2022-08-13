@@ -15,7 +15,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            ws s3 rm --recursive s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}
+            aws s3 rm --recursive s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
             aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
 
@@ -31,7 +31,7 @@ commands:
           command: |
                 cd ~/project/backend
                 npm install
-                npm run migration:revert
+                npm run migrations:revert
             
 jobs:
 
