@@ -29,6 +29,7 @@
     cd /home/ubuntu/backend
     tar xvzf artifact.tar.gz -C .
     ls -la
+    
 - name: Build
   become: true
   shell: |
