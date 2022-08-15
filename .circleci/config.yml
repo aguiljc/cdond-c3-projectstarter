@@ -166,9 +166,6 @@ jobs:
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
-
-            
-            exit 1
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -425,11 +422,16 @@ jobs:
             command: |
               apk add --update --no-cache python3 py3-pip
               /usr/local/bin/python -m pip install --upgrade pip
-              pip install awscli        
+              pip install awscli   
+
         - run:
-            name: Get old stack workflow id and remove old stacks and files
+            name: Fetch OldStack workflow ID
             command: |
-              # Fetch the Old workflow ID
+              # cat ~/OldWorkflowID.txt
+              # OldWorkflowID=$(cat ~/OldWorkFlowID.txt)
+              # echo OldWorkflowID: "${OldWorkflowID}"
+              # echo $OldWorkflowID
+
               export OldWorkflowID=$(aws cloudformation \
                       list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
                       --no-paginate --output text)
@@ -438,11 +440,12 @@ jobs:
 
               if [ "${OldWorkflowID}" != "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" ]
               then
+                echo '-----------------Delete Confirmed-----------------'
                 aws s3 rm --recursive s3://udapeople-${OldWorkflowID}
-                echo "backend-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "backend-${OldWorkflowID}"
-                echo "frontend-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "frontend-${OldWorkflowID}"
+              else
+                echo '-----------------Cannot Cleanup ------------------'
               fi
               
         - destroy-environment:
