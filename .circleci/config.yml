@@ -189,12 +189,13 @@ jobs:
           name: check on workspace persist
           command: |
             cd .circleci/ansible/
-            pwd
-            ls
             cat inventory.txt
+
+            exit 1
+
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"  
-      # - slack/status
+
 
   configure-infrastructure:
     docker:
